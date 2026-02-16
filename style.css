@@ -124,3 +124,10 @@ video {
 .vibrate-body {
   animation: vibrate-strong 0.8s linear;
 }
+
+/* Warning style when vibration not available */
+.vibrate-warning {
+  color: #ffcc00;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}

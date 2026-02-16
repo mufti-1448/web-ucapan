@@ -10,6 +10,8 @@ const musik = document.getElementById("bgm");
 const btnWa = document.getElementById("btnWa");
 const namaPengirim = document.getElementById("namaPengirim");
 namaPengirim.textContent = nama;
+const info = document.getElementById("info");
+const _originalInfoText = info ? info.textContent : "";
 
 const btnKamera = document.getElementById("btnKamera");
 const kameraBox = document.getElementById("kameraBox");
@@ -30,10 +32,8 @@ tombol.addEventListener("click", function () {
     musik.play();
   }
 
-  // vibrate saat klik - diperpanjang agar lebih terasa
-  if (navigator.vibrate) {
-    navigator.vibrate(500); // Getaran lebih kuat (500ms)
-  }
+  // vibrate saat klik - gunakan helper untuk pengecekan dan fallback
+  vibrateIfSupported(50);
 
   // Fallback CSS vibration jika API tidak support
   tombol.classList.add("vibrate-btn");
@@ -42,9 +42,8 @@ tombol.addEventListener("click", function () {
   teksCounter.textContent = "Klik: " + jumlahKlik;
 
   if (jumlahKlik === 5) {
-    if (navigator.vibrate) {
-      navigator.vibrate([500, 200, 500, 200, 500]); // Getaran lebih kuat
-    }
+    // pola getar yang tersusun dari pulsa singkat (lebih kompatibel)
+    vibrateIfSupported([80, 40, 80, 40, 80]);
 
     // CSS fallback vibration
     document.body.classList.add("vibrate-body");
@@ -66,6 +65,38 @@ tombol.addEventListener("click", function () {
     }
   }
 });
+
+function canVibrate() {
+  return typeof navigator !== "undefined" && "vibrate" in navigator && typeof navigator.vibrate === "function";
+}
+
+function vibrateIfSupported(pattern) {
+  try {
+    if (canVibrate()) {
+      const ok = navigator.vibrate(pattern);
+      console.log("vibrate invoked", pattern, "returned", ok);
+      return true;
+    } else {
+      showVibrateUnsupported();
+      console.warn("Vibration API not supported or available");
+      return false;
+    }
+  } catch (e) {
+    console.error("vibrate error", e);
+    showVibrateUnsupported();
+    return false;
+  }
+}
+
+function showVibrateUnsupported() {
+  if (!info) return;
+  info.textContent = "Perangkat/browser Anda tidak mendukung getaran";
+  info.classList.add("vibrate-warning");
+  setTimeout(() => {
+    info.textContent = _originalInfoText;
+    info.classList.remove("vibrate-warning");
+  }, 3500);
+}
 
 btnWa.addEventListener("click", function () {
   const pesan = `Terima kasih ya ${nama} 💖 Aku sudah lihat ucapannya dan ini fotoku 😄`;
