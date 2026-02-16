@@ -10,8 +10,6 @@ const musik = document.getElementById("bgm");
 const btnWa = document.getElementById("btnWa");
 const namaPengirim = document.getElementById("namaPengirim");
 namaPengirim.textContent = nama;
-const info = document.getElementById("info");
-const _originalInfoText = info ? info.textContent : "";
 
 const btnKamera = document.getElementById("btnKamera");
 const kameraBox = document.getElementById("kameraBox");
@@ -32,22 +30,9 @@ tombol.addEventListener("click", function () {
     musik.play();
   }
 
-  // vibrate saat klik - gunakan helper untuk pengecekan dan fallback
-  vibrateIfSupported(50);
-
-  // Fallback CSS vibration jika API tidak support
-  tombol.classList.add("vibrate-btn");
-  setTimeout(() => tombol.classList.remove("vibrate-btn"), 500);
-
   teksCounter.textContent = "Klik: " + jumlahKlik;
 
   if (jumlahKlik === 5) {
-    // pola getar yang tersusun dari pulsa singkat (lebih kompatibel)
-    vibrateIfSupported([80, 40, 80, 40, 80]);
-
-    // CSS fallback vibration
-    document.body.classList.add("vibrate-body");
-    setTimeout(() => document.body.classList.remove("vibrate-body"), 1000);
     ucapan.style.display = "block";
     tombol.style.display = "none";
     teksCounter.style.display = "none";
@@ -67,7 +52,11 @@ tombol.addEventListener("click", function () {
 });
 
 function canVibrate() {
-  return typeof navigator !== "undefined" && "vibrate" in navigator && typeof navigator.vibrate === "function";
+  return (
+    typeof navigator !== "undefined" &&
+    "vibrate" in navigator &&
+    typeof navigator.vibrate === "function"
+  );
 }
 
 function vibrateIfSupported(pattern) {
@@ -89,13 +78,7 @@ function vibrateIfSupported(pattern) {
 }
 
 function showVibrateUnsupported() {
-  if (!info) return;
-  info.textContent = "Perangkat/browser Anda tidak mendukung getaran";
-  info.classList.add("vibrate-warning");
-  setTimeout(() => {
-    info.textContent = _originalInfoText;
-    info.classList.remove("vibrate-warning");
-  }, 3500);
+  // intentionally left blank after removing vibration feature
 }
 
 btnWa.addEventListener("click", function () {
