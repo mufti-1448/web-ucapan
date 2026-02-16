@@ -32,23 +32,23 @@ tombol.addEventListener("click", function () {
 
   // vibrate saat klik - diperpanjang agar lebih terasa
   if (navigator.vibrate) {
-    navigator.vibrate(200);
+    navigator.vibrate(500); // Getaran lebih kuat (500ms)
   }
 
   // Fallback CSS vibration jika API tidak support
   tombol.classList.add("vibrate-btn");
-  setTimeout(() => tombol.classList.remove("vibrate-btn"), 200);
+  setTimeout(() => tombol.classList.remove("vibrate-btn"), 500);
 
   teksCounter.textContent = "Klik: " + jumlahKlik;
 
   if (jumlahKlik === 5) {
     if (navigator.vibrate) {
-      navigator.vibrate([300, 150, 300, 150, 300]);
+      navigator.vibrate([500, 200, 500, 200, 500]); // Getaran lebih kuat
     }
 
     // CSS fallback vibration
     document.body.classList.add("vibrate-body");
-    setTimeout(() => document.body.classList.remove("vibrate-body"), 800);
+    setTimeout(() => document.body.classList.remove("vibrate-body"), 1000);
     ucapan.style.display = "block";
     tombol.style.display = "none";
     teksCounter.style.display = "none";

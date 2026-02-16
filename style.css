@@ -69,10 +69,58 @@ video {
 
 #hasilFoto {
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 #btnShare {
   margin-top: 20px;
   background-color: #22c55e;
+}
+
+/* CSS Vibration Fallback Animation */
+@keyframes vibrate {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-3px, 3px);
+  }
+  40% {
+    transform: translate(-3px, -3px);
+  }
+  60% {
+    transform: translate(3px, 3px);
+  }
+  80% {
+    transform: translate(3px, -3px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes vibrate-strong {
+  0% {
+    transform: translate(0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-5px, 5px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(5px, -5px) rotate(2deg);
+  }
+  75% {
+    transform: translate(-5px, -5px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(0) rotate(0deg);
+  }
+}
+
+.vibrate-btn {
+  animation: vibrate 0.2s linear;
+}
+
+.vibrate-body {
+  animation: vibrate-strong 0.8s linear;
 }
