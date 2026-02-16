@@ -20,6 +20,8 @@ const hasilFoto = document.getElementById("hasilFoto");
 
 let stream;
 
+const btnShare = document.getElementById("btnShare");
+
 
 tombol.addEventListener("click", function () {
   jumlahKlik++;
@@ -85,7 +87,27 @@ btnFoto.addEventListener("click", function () {
 
   hasilFoto.style.display = "block";
   kameraBox.style.display = "none";
+  btnShare.style.display = "inline-block";
+
 
   stream.getTracks().forEach((track) => track.stop());
+});
+
+btnShare.addEventListener("click", async function () {
+  if (!navigator.share) {
+    alert("HP kamu belum support fitur share 😢");
+    return;
+  }
+
+  const response = await fetch(hasilFoto.src);
+  const blob = await response.blob();
+
+  const file = new File([blob], "ucapan.png", { type: "image/png" });
+
+  await navigator.share({
+    title: "Ucapan Spesial",
+    text: `Terima kasih ya ${nama} 💖`,
+    files: [file],
+  });
 });
 
