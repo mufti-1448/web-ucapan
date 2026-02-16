@@ -1,0 +1,63 @@
+body {
+  background-color: #0f172a;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding-top: 100px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+p {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+button {
+  margin-top: 30px;
+  padding: 15px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #38bdf8;
+  color: black;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0ea5e9;
+}
+
+#ucapan {
+  margin-top: 30px;
+  font-size: 22px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.confetti {
+  position: fixed;
+  top: -10px;
+  font-size: 24px;
+  animation: jatuh 2s linear forwards;
+}
+
+@keyframes jatuh {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
