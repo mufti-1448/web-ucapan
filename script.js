@@ -22,7 +22,6 @@ let stream;
 
 const btnShare = document.getElementById("btnShare");
 
-
 tombol.addEventListener("click", function () {
   jumlahKlik++;
 
@@ -31,19 +30,30 @@ tombol.addEventListener("click", function () {
     musik.play();
   }
 
-  // vibrate saat klik
-  navigator.vibrate(100);
+  // vibrate saat klik - diperpanjang agar lebih terasa
+  if (navigator.vibrate) {
+    navigator.vibrate(200);
+  }
+
+  // Fallback CSS vibration jika API tidak support
+  tombol.classList.add("vibrate-btn");
+  setTimeout(() => tombol.classList.remove("vibrate-btn"), 200);
 
   teksCounter.textContent = "Klik: " + jumlahKlik;
 
   if (jumlahKlik === 5) {
-    navigator.vibrate([200, 100, 200]);
+    if (navigator.vibrate) {
+      navigator.vibrate([300, 150, 300, 150, 300]);
+    }
+
+    // CSS fallback vibration
+    document.body.classList.add("vibrate-body");
+    setTimeout(() => document.body.classList.remove("vibrate-body"), 800);
     ucapan.style.display = "block";
     tombol.style.display = "none";
     teksCounter.style.display = "none";
     btnWa.style.display = "inline-block";
     btnKamera.style.display = "inline-block";
-
 
     for (let i = 0; i < 20; i++) {
       const confetti = document.createElement("div");
@@ -62,7 +72,6 @@ btnWa.addEventListener("click", function () {
   const url = "https://wa.me/?text=" + encodeURIComponent(pesan);
   window.location.href = url;
 });
-
 
 btnKamera.addEventListener("click", async function () {
   kameraBox.style.display = "block";
@@ -89,7 +98,6 @@ btnFoto.addEventListener("click", function () {
   kameraBox.style.display = "none";
   btnShare.style.display = "inline-block";
 
-
   stream.getTracks().forEach((track) => track.stop());
 });
 
@@ -110,4 +118,3 @@ btnShare.addEventListener("click", async function () {
     files: [file],
   });
 });
-
